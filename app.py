@@ -1,9 +1,33 @@
 import streamlit as st
+import openai
 
-st.title("Medical LLM Project")
-st.write("Welcome to the Medical LLM App!")
+# Azure OpenAI setup
+openai.api_type = "azure"
+openai.api_base = "https://hospai.openai.azure.com/openai/deployments/gpt-4-deployment/chat/completions?api-version=2024-08-01-preview"
+openai.api_version = "2024-08-01-preview"
+openai.api_key = "DTQRkuJSenFTBlOTVjpAXm4bNaDPjJ0Ghu2Ifyw8GA2pvfb4gay4JQQJ99BBACHYHv6XJ3w3AAABACOGQfVW"
 
-# Add user input for testing
-user_input = st.text_area("Enter text:")
-if user_input:
-    st.write("You entered:", user_input)
+deployment_name = "gpt-4-deployment"
+
+st.title("Medical LLM Chatbot")
+st.write("Ask me anything about medical topics!")
+
+# User input
+user_input = st.text_area("Enter your medical question:")
+
+if st.button("Get Answer"):
+    if user_input:
+        try:
+            # OpenAI API Call
+            response = openai.ChatCompletion.create(
+                engine=deployment_name,
+                messages=[{"role": "user", "content": user_input}],
+                max_tokens=500
+            )
+            answer = response["choices"][0]["message"]["content"]
+            st.write("### 🤖 AI Response:")
+            st.write(answer)
+        except Exception as e:
+            st.error(f"Error: {e}")
+    else:
+        st.warning("Please enter a question.")
