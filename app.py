@@ -5,7 +5,8 @@ import openai
 openai.api_type = "azure"
 openai.api_base = "https://hospai.openai.azure.com/openai/deployments/gpt-4-deployment/chat/completions?api-version=2024-08-01-preview"
 openai.api_version = "2024-08-01-preview"
-openai.api_key = "DTQRkuJSenFTBlOTVjpAXm4bNaDPjJ0Ghu2Ifyw8GA2pvfb4gay4JQQJ99BBACHYHv6XJ3w3AAABACOGQfVW"
+openai.api_key = st.secrets["openai"]["api_key"]
+
 
 deployment_name = "gpt-4-deployment"
 
